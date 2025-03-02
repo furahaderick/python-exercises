@@ -21,8 +21,15 @@ class Constants(Enum):
     AREA_COVERED_BY_A_GALLON = 350
 
 
-length = float(input("What is the length of the room? (ft): "))
-width = float(input("What is the width of the room? (ft): "))
+try:
+    length = float(input("What is the length of the room? (ft): "))
+    width = float(input("What is the width of the room? (ft): "))
+    if length <= 0.0 or width <= 0.0:
+        raise ValueError
+
+except ValueError:
+    print("Please enter valid, positive numbers.")
+    sys.exit(0)
 
 if width > length:
     print("The width cannot be longer than the length.")
