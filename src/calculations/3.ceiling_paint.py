@@ -69,5 +69,5 @@ else:
 gallons_required = math.ceil(area / Constants.AREA_COVERED_BY_A_GALLON.value)
 
 print(
-    f"You will need to purchase {gallons_required} gallons of paint to cover {area} square feet."
+    f"You will need to purchase {gallons_required} gallon{'s' if gallons_required > 1 else ''} of paint to cover {area} square feet."
 )
