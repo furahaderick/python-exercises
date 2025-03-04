@@ -91,17 +91,29 @@ total = 0
 
 loop = True
 
+
+class InvalidContinuationChoiceException(Exception):
+    pass
+
+
+class CrazyCountingException(Exception):
+    pass
+
+
 while loop == True:
     try:
         price = float(input("Enter the item price: "))
         count = float(input("Enter the quantity of the items: "))
+
+        if (price <= 0 and count > 0) or (count < 0):
+            raise CrazyCountingException()
 
         prices_list.append(price)
         count_list.append(count)
 
         choice = input("Want to add another entry? (Y/N) ")
         if choice not in ["Y", "N", "y", "n"]:
-            raise Exception("Invalid continuation choice")
+            raise InvalidContinuationChoiceException()
 
         if choice in ["N", "n"]:
             loop = False
@@ -109,8 +121,11 @@ while loop == True:
     except ValueError:
         print("Please enter valid numbers")
         sys.exit(0)
-    except Exception as error:
-        print(f"Error: {error}")
+    except CrazyCountingException:
+        print("Your counting does not make sense")
+        sys.exit(0)
+    except InvalidContinuationChoiceException:
+        print("Invalid continuation choice")
         break
 
 for index, item in enumerate(count_list):
