@@ -11,6 +11,8 @@
 #   - if pwds dont match: display "I don't know you"
 # End
 
+from getpass import getpass
+
 
 class UserNotFoundError(Exception):
     pass
@@ -48,7 +50,7 @@ try:
     if user_match == None:
         raise UserNotFoundError()
 
-    password = input("What is the password?: ")
+    password = getpass("What is the password?: ")
 
     if user_match["password"] != password:
         raise InvalidCredentialsError()
