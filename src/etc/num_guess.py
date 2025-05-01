@@ -8,6 +8,7 @@
 # If no: display "That was close. Try again" Next iteration
 
 import random
+import sys
 
 num = 0
 guess = 0
@@ -17,7 +18,14 @@ num = random.randint(0, 15)
 loop = True
 while loop:
     try:
-        guess = int(input("Guess the number: "))
+        guess = input("Guess the number (or 'q' to quit): ")
+
+        if guess == "q":
+            loop = False
+            print("Nice try. We'll see you again")
+            sys.exit(0)
+        else:
+            guess = int(guess)
 
     # Handle Casting error
     except ValueError:
