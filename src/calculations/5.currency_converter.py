@@ -15,7 +15,7 @@ try:
     euro_exchange_rate = float(input("What is the exchange rate? "))
 
     if euros_amount < 0 or euro_exchange_rate < 0:
-        raise Exception("Use positve numbers.")
+        raise Exception("Use positive numbers.")
 
 except ValueError:
     print("Please use valid numbers")
