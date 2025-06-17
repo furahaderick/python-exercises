@@ -193,13 +193,13 @@ while True:
     if command.startswith("go "):
         direction = command.split(" ")[1]
 
-        if (
-            direction in location.exits
-            and not locations[location.exits[direction]].locked
-        ):
-            current_location = location.exits[direction]
+        if direction in location.exits:
+            if not locations[location.exits[direction]].locked:
+                current_location = location.exits[direction]
+            else:
+                print(f"The {locations[location.exits[direction]].name} is locked!")
         else:
-            print(f"{locations[location.exits[direction]].name} is locked!")
+            print("I don't know where that is!")
 
     # command inventory
     elif command == "inventory":
