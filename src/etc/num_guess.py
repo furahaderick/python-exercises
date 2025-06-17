@@ -31,6 +31,9 @@ while loop:
     except ValueError:
         print("Integers only, pleease.")
         loop = True
+    except KeyboardInterrupt:
+        print("\nThank you for trying. See you next time.")
+        loop = False
     else:
         if guess == num:
             loop = False
