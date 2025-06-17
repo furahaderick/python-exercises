@@ -3,6 +3,17 @@
 
 # Location Class
 class Location:
+    """
+    Represents a location on the game's map.
+
+    Attributes:
+    name(str): The location's name.
+    description(str): The location's description.
+    exits(dict): Exits that go out of the location.
+    location_items(list): Items in the location.
+    locked(bool): The open/closed state of the location.
+    """
+
     def __init__(self, name, description, exits, location_items, locked):
         self.name = name
         self.description = description
@@ -13,6 +24,16 @@ class Location:
 
 # Item Class
 class Item:
+    """
+    Represents a game item.
+
+    Attributes:
+    name(str): The item's name.
+    description(str): The item's description
+    usable(bool): The item's usable state
+    item_location(str): Where the item is found.
+    """
+
     def __init__(self, name, description, usable, item_location):
         self.name = name
         self.description = description
@@ -21,6 +42,15 @@ class Item:
 
 
 class NPC:
+    """
+    Represents a non-player character
+
+    Attributes:
+    name(str): The NPC's name
+    dialogue(str): The NPC's hint or dialogue
+    npc_location(str): Where the NPC is found
+    """
+
     def __init__(self, name, dialogue, npc_location):
         self.name = name
         self.dialogue = dialogue
@@ -45,7 +75,7 @@ locations = {
             ]
         ),
         {"south": "whispering_forest"},
-        {},
+        [],
         False,
     ),
     "whispering_forest": Location(
@@ -56,42 +86,42 @@ locations = {
             "east": "forgotten_library",
             "south": "abandoned_chapel",
         },
-        {},
+        [],
         False,
     ),
     "forgotten_library": Location(
         "Forgotten Library",
         "You are in a dusty library filled with ancient books.",
         {"west": "whispering_forest"},
-        {},
+        [],
         True,
     ),
     "abandoned_chapel": Location(
         "Abandoned Chapel",
         "You are in a chapel with broken stained glass windows.",
         {"north": "whispering_forest", "south": "cavern_of_echoes"},
-        {},
+        [],
         False,
     ),
     "cavern_of_echoes": Location(
         "Cavern of Echoes",
         "You are in a dark cavern where your voice echoes.",
         {"north": "abandoned_chapel", "east": "frozen_passage"},
-        {},
+        [],
         False,
     ),
     "frozen_passage": Location(
         "Frozen Passage",
         "You are in a passage filled with ice and snow.",
         {"west": "cavern_of_echoes", "south": "tower_of_heartstone"},
-        {},
+        [],
         True,
     ),
     "tower_of_heartstone": Location(
         "Tower of Heartstone",
         "You are in a tower with a large heart-shaped stone at its center.",
         {"north": "frozen_passage"},
-        {},
+        [],
         False,
     ),
 }
@@ -128,12 +158,36 @@ while True:
     location = locations[current_location]
 
     # TODO: Get items here
+    items_in_sight = {
+        key: obj for key, obj in items.items() if obj.item_location == current_location
+    }
     # TODO: Get NPCs here
 
-    # TODO: Print description (location, items, NPCs)
+    # TODO: Print description (location, NPCs)
     print(f"\n{location.name}\n{location.description}")
+    print()
 
-    command = input("> ").strip().lower()
+    # Print exits
+    exit_locations = location.exits
+    print("Exits: ")
+    for direction, destionation in exit_locations.items():
+        print(f"- {direction}, to the {destionation}")
+    print()
+
+    # Print items
+    print("Visible items: ")
+    if len(items_in_sight) > 0:
+        for key in items_in_sight:
+            print(f"- {key}")
+    else:
+        print("- None")
+    print()
+
+    try:
+        command = input("> ").strip().lower()
+    except KeyboardInterrupt:
+        print("\nSee you next time, adventurer.")
+        break
 
     # go [direction] command
     if command.startswith("go "):
