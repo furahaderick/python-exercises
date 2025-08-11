@@ -157,13 +157,14 @@ while True:
     # Get location
     location = locations[current_location]
 
-    # TODO: Get items here
+    # Get items nearby
     items_in_sight = {
         key: obj for key, obj in items.items() if obj.item_location == current_location
     }
-    # TODO: Get NPCs here
 
-    # TODO: Print description (location, NPCs)
+    # TODO: Get NPCs nearby
+
+    # Print location description
     print(f"\n{location.name}\n{location.description}")
     print()
 
@@ -182,6 +183,8 @@ while True:
     else:
         print("- None")
     print()
+
+    # TODO: Print NPCs
 
     try:
         command = input("> ").strip().lower()
